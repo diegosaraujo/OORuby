@@ -1,12 +1,17 @@
 class Livro
    attr_reader :titulo, :preco, :ano_lancamento
 
-   def initialize(titulo, preco, ano_lancamento)
+   def initialize(titulo, preco, ano_lancamento, possui_reimpressao)
          @titulo = titulo
          @ano_lancamento = ano_lancamento
+         @possui_reimpressao = possui_reimpressao
          @preco = calcula_preco(preco)
-
    end
+
+   def possui_reimpressao?
+      @possui_reimpressao
+   end
+
    private
 
    def calcula_preco(base)
@@ -26,16 +31,7 @@ def livro_para_newsletter(livro)
    end
 end
 
-algoritmos = Livro.new("Algoritmos", 100, 1998)
-#ruby = Livro.new("Ruby", 100, 2001)
+algoritmos = Livro.new("Algoritmos", 100, 1998, true)
 livro_para_newsletter(algoritmos)
 
 
-# def lista_livros(livros)
-#       livros.each do |livro|
-#          puts "Livro: #{livro.titulo} - Preço: #{livro.preco} - Data de Publicação: #{livro.ano_lancamento}"
-#       end
-# end
-
-# livros = [algoritmos, ruby]
-# lista_livros livros
