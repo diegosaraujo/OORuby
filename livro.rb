@@ -87,6 +87,7 @@ baratos.each do |livro|
             puts livro.titulo
 end
 
+puts "Total de livros: #{estoque.total}"
 
 
 
