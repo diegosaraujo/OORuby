@@ -1,22 +1,41 @@
 class Livro
-   attr_accessor :titulo, :preco, :ano_lancamento
+   attr_reader :titulo, :preco, :ano_lancamento
+
+   def initialize(titulo, preco, ano_lancamento)
+         @titulo = titulo
+         @ano_lancamento = ano_lancamento
+         @preco = calcula_preco(preco)
+
+   end
+   private
+
+   def calcula_preco(base)
+            if @ano_lancamento < 2000
+               base * 0.7
+            else
+               base
+            end
+      end
 end
 
-livro_rails = Livro.new
-livro_rails.preco = 70
-livro_rails.titulo = "Agile Web Development with Rails"
-livro_rails.ano_lancamento = 2011
-
-livro_ruby = Livro.new
-livro_ruby.preco = 60
-livro_ruby.titulo = "Progamming Ruby 1.9"
-livro_ruby.ano_lancamento = 2010
-
-def imprime_nota_fiscal(livros)
-   livros.each do |livro|
-      puts "Titulo: #{livro.titulo} - #{livro.preco}"
+def livro_para_newsletter(livro)
+      if livro.ano_lancamento < 1999
+         puts "NewsLetter /Liquidação"
+         puts livro.titulo
+         puts livro.preco
    end
 end
 
-livros = [livro_rails, livro_ruby]
-imprime_nota_fiscal livros
+algoritmos = Livro.new("Algoritmos", 100, 1998)
+#ruby = Livro.new("Ruby", 100, 2001)
+livro_para_newsletter(algoritmos)
+
+
+# def lista_livros(livros)
+#       livros.each do |livro|
+#          puts "Livro: #{livro.titulo} - Preço: #{livro.preco} - Data de Publicação: #{livro.ano_lancamento}"
+#       end
+# end
+
+# livros = [algoritmos, ruby]
+# lista_livros livros
