@@ -33,16 +33,21 @@ class Livro
       end
 end
 
-def livro_para_newsletter(livro)
-      if livro.ano_lancamento < 1999
-         puts "NewsLetter /Liquidação"
-         puts livro.titulo
-         puts livro.preco
-         puts livro.possui_reimpressao?
-   end
+class Array
+      attr_reader :maximo_necessario
+
+      def <<(livro)
+            push(livro)
+            if @maximo_necessario.nil? || @maximo_necessario < size
+               @maximo_necessario = size
+            end
+            self
+      end
 end
 
+
 class Estoque
+      attr_reader :livros
 
       def initialize
             @livros = []
@@ -69,28 +74,15 @@ class Estoque
       end
 end
 
+estoque = Estoque.new
 
 algoritmos = Livro.new("Algoritmos", 100, 1998, true)
 arquitetura = Livro.new("Introdução a Arquitetura e Design de Software", 70, 2011, true)
+programmer = estoque.adiciona Livro.new("The Pragmatic Programmer", 100, 1999, true)
+ruby = estoque.adiciona Livro.new("Programming in Ruby", 100, 2004, true)
 
-estoque = Estoque.new
-estoque.adiciona algoritmos
-estoque.adiciona arquitetura
-estoque.adiciona Livro.new("The Pragmatic Programmer", 100, 1999, true)
-estoque.adiciona Livro.new("Programming in Ruby", 100, 2004, true)
-estoque.adiciona nil
+estoque.livros << algoritmos << arquitetura
+puts estoque.livros.maximo_necessario
+estoque.livros << programmer << ruby
 
-estoque.exporta_csv
-
-baratos = estoque.mais_baratos_que(80)
-baratos.each do |livro|
-            puts livro.titulo
-end
-
-puts "Total de livros: #{estoque.total}"
-
-
-
-
-
-
+estoque.livros.delete algoritmos
