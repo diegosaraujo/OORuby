@@ -33,22 +33,24 @@ class Livro
       end
 end
 
+module Contador
+   def @livros.<<(livro)
+            push(livro)
+            if @maximo_necessario.nil? || @maximo_necessario < size
+               @maximo_necessario = size
+            end
+            self
+      end
+
+  attr_reader :maximo_necessario
+end
 
 class Estoque
       attr_reader :livros
 
       def initialize
             @livros = []
-             def @livros.<<(livro)
-                  push(livro)
-                  if @maximo_necessario.nil? || @maximo_necessario < size
-                     @maximo_necessario = size
-                  end
-                  self
-            end
-            def @livros.maximo_necessario
-                  @maximo_necessario
-            end
+            @livros.extend Contador
       end
 
       def exporta_csv
@@ -67,20 +69,39 @@ class Estoque
             @livros.size
       end
 
-      def adiciona(livro)
+      def <<(livro)
             @livros << livro if livro
+            self
+      end
+
+      def remove(livro)
+            @livros.delete livro
+      end
+
+      def maximo_necessario
+            @livros.maximo_necessario
       end
 end
 
-estoque = Estoque.new
 
 algoritmos = Livro.new("Algoritmos", 100, 1998, true)
 arquitetura = Livro.new("Introdução a Arquitetura e Design de Software", 70, 2011, true)
-programmer = estoque.adiciona Livro.new("The Pragmatic Programmer", 100, 1999, true)
-ruby = estoque.adiciona Livro.new("Programming in Ruby", 100, 2004, true)
+programmer = Livro.new("The Pragmatic Programmer", 100, 1999, true)
+ruby = Livro.new("Programming in Ruby", 100, 2004, true)
 
-estoque.livros << algoritmos << arquitetura
-puts estoque.livros.maximo_necessario
-estoque.livros << programmer << ruby
+estoque = Estoque.new
 
-estoque.livros.delete algoritmos
+estoque << algoritmos
+puts estoque.maximo_necessario
+estoque << programmer << arquitetura
+puts estoque.maximo_necessario
+estoque << ruby
+puts estoque.maximo_necessario
+estoque .remove algoritmos
+puts estoque.maximo_necessario
+
+numbers = []
+numbers.extend Contador
+numbers << 13
+numbers << 15
+numbers << 17 << 19
